@@ -19,6 +19,8 @@ Existing Bots
 - **AnnaK** : Mostly talks about Johnny.
 - **Headroom** : A venerable, but glitchy personality who used to be stuck in a TV, but is now stuck in a terminal.
 
+The above bots are made by me and I can vouch for them. You can also [search npm](max.term-*) for bots others have made.
+
 Bot Ideas
 -------------
 - **Eliza** : The oldest of the personalities
@@ -26,8 +28,7 @@ Bot Ideas
 - **Holly** : A highly unreliable computer
 - **Durandal** : A homicidal ship computer
 - **VALIS** : An orbital superintelligence that can beam enlightenment to the user.
-- **Wintermute** : An AI seeking to better itself
-- **Gibson** : Hacks things, makes threats.
+- **Wintermute** : An AI seeking to better itself.
 - **Project2501** : The PuppetMaster is just looking for an AI to settle down with.
 - **Heart of Gold** : An exceedingly (exhaustingly) nice ship computer.
 - **DaVinci** : A virus targeting energy companies.
