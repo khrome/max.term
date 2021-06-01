@@ -39,3 +39,19 @@ Put some gifs in directories:
 - `/assets/idle/` : put a number of gifs here that will be loaded and cycled through during idle
 - `/assets/talking/` : put a number of gifs here that will be loaded and cycled through during talking
 - `/assets/emotions/` : put a number of gifs, each named for the emotion it represents
+
+set `options`, `config`, `voice` in it's `package.json`
+
+Roadmap
+-------
+
+- support ansi/ascii frames
+- support gif/ansi/ascii compositing
+- make engines pluggable (currently just ELIZA)
+- support audio clips for speech
+- support speech to text queries
+- make query source plugins
+- support voice synth plugins
+- dialog tree support
+- curses-like interaction support
+- Desktop apps
