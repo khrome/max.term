@@ -1,4 +1,5 @@
 ![Max.Term](./assets/max.loop.gif)
+
 Max.Term
 ========
 
