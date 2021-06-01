@@ -19,7 +19,7 @@ Existing Bots
 - **AnnaK** : Mostly talks about Johnny.
 - **Headroom** : A venerable, but glitchy personality who used to be stuck in a TV, but is now stuck in a terminal.
 
-The above bots are made by me and I can vouch for them. You can also [search npm](max.term-*) for bots others have made.
+The above bots are made by me and I can vouch for them. You can also [search npm](https://www.npmjs.com/search?q=max.term-*) for bots others have made.
 
 Bot Ideas
 -------------
