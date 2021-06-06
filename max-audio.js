@@ -1,7 +1,7 @@
 var fs = require('fs');
 var text2wav = require('text2wav');
 var portAudio = require('naudiodon');
-portAudio.setConsole({log : function(){}, error:function(){}});
+//portAudio.setConsole({log : function(){}, error:function(){}});
 var SB = require('stream-buffers');
 
 var outputChannels = portAudio.getDevices().filter(function(device){

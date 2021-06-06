@@ -1,6 +1,6 @@
 {
   "name": "max.term",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "dependencies": {
     "ansi-gif": "^0.3.2",
     "app-term-kit": "0.0.3",
