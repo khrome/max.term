@@ -14,6 +14,6 @@
     "text2wav": "0.0.13"
   },
   "bin":{
-    "max": "./bin/max",
+    "max": "./bin/max"
   }
 }
