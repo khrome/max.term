@@ -33,7 +33,9 @@ var max = function(opts){
         //todo: support external personalities
         fs.stat(path.join(root, plugName), function(err, stat){
             if(stat && !err){
-                ob.loadAssets(ob.options.personality, function(){
+                ob.loadAssets(ob.options.personality, function(type, name){
+                    return opts.plugin?opts.plugin(type, name):require(name);
+                }, function(){
                     gauge.hide();
                     var fns = ob.jobs;
                     ob.jobs = [];
@@ -93,7 +95,7 @@ max.prototype.stop = function(){
     }
 }
 
-max.prototype.loadAssets = function(personality, callback, updateHandler){
+max.prototype.loadAssets = function(personality, getPlugin, callback, updateHandler){
     var saw = {};
     //todo: test local
     var plugName = pluginName('personality', personality);
@@ -110,7 +112,7 @@ max.prototype.loadAssets = function(personality, callback, updateHandler){
     var totals = [];
     var currents = [];
     var ob = this;
-    var PersonalityType = require('./engines/'+config.personality.engine);
+    var PersonalityType = getPlugin('engine', config.personality.engine);
     this.personality = new PersonalityType(config.personality.options||{});
     var modPath = path.join(ob.moduleRoot, plugName)
     eachOfLimit([

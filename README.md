@@ -10,7 +10,10 @@ Install
 
     npm install -g max.term
     max install personality headroom
+    max install engine eliza
     max --headroom say "I am installed correctly"
+    max --headroom ask "What is your name"
+    max --headroom news http://feeds.bbci.co.uk/news/video_and_audio/news_front_page/rss.xml
 
 Existing Bots
 -------------
@@ -18,6 +21,7 @@ Existing Bots
 - **HAL** : A homicidal ship computer.
 - **AnnaK** : Mostly talks about Johnny.
 - **Headroom** : A venerable, but glitchy personality who used to be stuck in a TV, but is now stuck in a terminal.
+- **Lieutenant** : A mutant from a post apocalyptic future.
 
 The above bots are made by me and I can vouch for them. You can also [search npm](https://www.npmjs.com/search?q=max.term-*) for bots others have made.
 
@@ -46,8 +50,9 @@ set `options`, `config`, `voice` in it's `package.json`
 Roadmap
 -------
 
-- make engines pluggable
-    - AIML
+
+- AIML
+- frame cache
 - support ansi/ascii frames
 - support gif/ansi/ascii compositing
 - support audio clips for speech

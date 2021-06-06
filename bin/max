@@ -28,7 +28,6 @@ var max = new CLApp('max.term', {
 });
 
 var personality;
-
 var maxbot;
 
 max.header();
@@ -53,7 +52,7 @@ max.command({
         parser.parseURL(target).then(function(feed){
             eachOfLimit(feed.items, 1, function(item, index, done){
                 maxbot.say(item.content, (err, response)=>{
-                    max.start('idle');
+                    maxbot.start('idle');
                     setTimeout(function(){
                         done();
                     }, 1000 * Math.floor(Math.random()*8)); //wait 0-8s
@@ -79,24 +78,6 @@ max.command({
     }
 });
 
-/*max.argument({
-    name : 'headroom',
-    type : 'boolean',
-    description: 'use the headroom personality'
-});
-
-max.argument({
-    name : 'hal',
-    type : 'boolean',
-    description: 'use the HAL personality'
-});
-
-max.argument({
-    name : 'annak',
-    type : 'boolean',
-    description: 'use the Anna K personality'
-});*/
-
 var getSelectedPlugin = function(type, pluginObjects, argv){
     var typeObjects = pluginObjects[type];
     var result;
@@ -106,7 +87,6 @@ var getSelectedPlugin = function(type, pluginObjects, argv){
     });
     return result;
 }
-
 
 max.plugins({
     plugin: { prefix : 'max.term.plugin-' },
@@ -128,6 +108,9 @@ max.plugins({
         if(selected){
             maxbot = new Max({
                 personality : selected.name,
+                plugin : function(type, name){
+                    return max.plugin(type, name);
+                },
                 modulesDir : max.defaultPluginDir()
             });
         }
