@@ -29,10 +29,7 @@ var max = new CLApp('max.term', {
 
 var personality;
 
-var maxbot = new Max({
-    personality : personality || 'headroom',
-    modulesDir : max.defaultPluginDir()
-});
+var maxbot;
 
 max.header();
 max.help();
@@ -41,9 +38,10 @@ max.command({
     name : 'say',
     description: 'say something',
     examples: [],
-    action : function(argv, target){
+    action : function(argv, target, complete){
         maxbot.say(target, (err, response)=>{
-            console.log('RES', response);
+            //console.log('RES', response);
+            complete();
         });
     }
 });
@@ -51,7 +49,7 @@ max.command({
     name : 'news',
     description: 'speak a feed',
     examples: [],
-    action : function(argv, target){
+    action : function(argv, target, complete){
         parser.parseURL(target).then(function(feed){
             eachOfLimit(feed.items, 1, function(item, index, done){
                 maxbot.say(item.content, (err, response)=>{
@@ -62,6 +60,7 @@ max.command({
                 });
             }, function(){
                 console.log('FINISHED');
+                complete();
             })
         }).catch(function(err){
 
@@ -72,14 +71,15 @@ max.command({
     name : 'ask',
     description: 'get a response to a single query',
     examples: [],
-    action : function(argv, target){
+    action : function(argv, target, complete){
         maxbot.input(target, (err, response)=>{
             console.log('RES', response);
+            complete()
         });
     }
 });
 
-max.argument({
+/*max.argument({
     name : 'headroom',
     type : 'boolean',
     description: 'use the headroom personality'
@@ -95,95 +95,45 @@ max.argument({
     name : 'annak',
     type : 'boolean',
     description: 'use the Anna K personality'
-});
+});*/
+
+var getSelectedPlugin = function(type, pluginObjects, argv){
+    var typeObjects = pluginObjects[type];
+    var result;
+    typeObjects.forEach(function(obj){
+        if(result) return;
+        if(obj.isEnabled(argv)) result = obj;
+    });
+    return result;
+}
+
 
 max.plugins({
-    plugins: {
-        detect : (s)=>{ s.indexOf('max.term.plugin-') !== -1 }
-    },
-    personalities: {
-        detect : (s)=>{ s.indexOf('max.term-') !== -1 }
-    },
-    engines: {
-        detect : (s)=>{ s.indexOf('max.term.engine-') !== -1 }
-    },
+    plugin: { prefix : 'max.term.plugin-' },
+    personality: { prefix : 'max.term-' },
+    engine: { prefix : 'max.term.engine-' }
 }, function(err, config, loadPlugins){
-    max.footer();
-    max.run();
-});
-
-//var modulePath = path.join(os.homedir(), '.max.term', 'node_modules');
-
-/* ensureDir(modulePath, function(err){
-    if(err) throw err;
-    yargs.usage('Usage: $0 <command> [options] <target>')
-    yargs.command('say', 'say something')
-        .command('bot', 'run interactively')
-        .command('install', 'install a personality')
-        .command('news', 'speak a feed')
-        .command('ask', 'get a response to a single query')
-        .command('tune-in', 'watch the broadcast')
-        .demand(2)
-        .example('$0 --headroom say "Hello"', 'say hello in the headroom personality')
-        .example('$0 install hal', 'install the HAL personality')
-        .example('$0 --hal news http://rss.slashdot.org/Slashdot/slashdotMain', 'Have HAL read the slashdot RSS feed')
-        .alias('p', 'personality')
-            .nargs('p', 1)
-            .describe('p', 'explicitly define the personality')
-        .boolean('M')
-            .alias('M', 'headroom')
-            .describe('M', 'use the headroom personality')
-        .boolean('H')
-            .alias('H', 'hal')
-            .describe('H', 'use the hal 9000 personality')
-        .boolean('J')
-            .alias('J', 'annak')
-            .describe('J', 'use the annak personality')
-        .help('h')
-        .alias('h', 'help')
-        .epilog('©2021 - Abbey Hawk Sparrow');
-    argv = yargs.argv;
-    var action = argv._.shift();
-    var target = argv._.pop();
-
-    var personality;
-
-    if(argv.M) personality = 'headroom';
-    if(argv.J) personality = 'annak';
-    if(argv.H) personality = 'hal';
-
-    var max = new Max({
-        personality : personality
+    loadPlugins('*', function(err, plugins, pluginObjects){
+        var pluginNames = Object.keys(plugins.personality);
+        pluginNames.forEach(function(name){
+            if(pluginObjects.personality[name].configureCLApp){
+                pluginObjects.personality[name].configureCLApp(max);
+            }
+        });
+        var selected = getSelectedPlugin(
+            'personality',
+            pluginObjects,
+            max.argv()
+        );
+        if(selected){
+            maxbot = new Max({
+                personality : selected.name,
+                modulesDir : max.defaultPluginDir()
+            });
+        }
+        max.footer();
+        max.run(function(err){
+            console.log('Goodbye.');
+        });
     });
-
-    switch(action){
-        case 'say':
-            max.say(target, (err, response)=>{
-                console.log('RES', response);
-            });
-            break;
-        case 'speak':
-        case 'ask':
-            max.input(target, (err, response)=>{
-                console.log('RES', response);
-            });
-            break;
-        case 'news':
-            parser.parseURL(target).then(function(feed){
-                eachOfLimit(feed.items, 1, function(item, index, done){
-                    max.say(item.content, (err, response)=>{
-                        max.start('idle');
-                        setTimeout(function(){
-                            done();
-                        }, 1000 * Math.floor(Math.random()*8)); //wait 0-8s
-                    });
-                }, function(){
-                    console.log('FINISHED');
-                })
-            }).catch(function(err){
-
-            });
-            break;
-        default: throw new Error('Unkown action: '+action);
-    }
-});*/
+});

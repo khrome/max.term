@@ -1,4 +1,4 @@
-![Max.Term](./assets/max.loop.gif)
+![Max.Term](https://raw.githubusercontent.com/khrome/max.term/master/assets/max.loop.gif)
 
 Max.Term
 ========
@@ -9,7 +9,7 @@ Install
 -------
 
     npm install -g max.term
-    max install headroom
+    max install personality headroom
     max --headroom say "I am installed correctly"
 
 Existing Bots
@@ -46,13 +46,14 @@ set `options`, `config`, `voice` in it's `package.json`
 Roadmap
 -------
 
+- make engines pluggable
+    - AIML
 - support ansi/ascii frames
 - support gif/ansi/ascii compositing
-- make engines pluggable (currently just ELIZA)
 - support audio clips for speech
 - support speech to text queries
 - make query source plugins
 - support voice synth plugins
 - dialog tree support
 - curses-like interaction support
-- Desktop apps
+- Desktop apps (just a wrappered terminal for the UI impared)
