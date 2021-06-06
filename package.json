@@ -1,9 +1,9 @@
 {
   "name": "max.term",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "dependencies": {
-    "ansi-gif": "^0.3.1",
-    "app-term-kit": "0.0.1",
+    "ansi-gif": "^0.3.2",
+    "app-term-kit": "0.0.2",
     "ascii-art-ansi": "^1.4.0",
     "async": "^3.2.0",
     "comment-json": "^4.1.0",
